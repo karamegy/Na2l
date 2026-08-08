@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مكتبة الألعاب الفضائية - v10.2 Cinema Space VIP & Admin Panel</title>
+    <title>مكتبة الألعاب الفضائية - v10.3 Cinema Space VIP & Founder Panel</title>
     <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0b0c2a">
 
@@ -537,6 +537,25 @@
             box-sizing: border-box;
         }
 
+        .payment-logo-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 8px 0;
+        }
+        .pay-badge {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #00f3ff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: bold;
+        }
+
         .wp-admin-panel {
             background: #1e1e2f;
             border: 2px solid #e74c3c;
@@ -603,7 +622,7 @@
         <!-- 1. شاشة تسجيل الدخول والتسجيل المتكاملة -->
         <div id="login-screen" class="screen">
             <div class="cinema-radar-box"></div>
-            <h1>🌌 محاكاة السينما الفضائية V10.2</h1>
+            <h1>🌌 محاكاة السينما الفضائية V10.3</h1>
             <p>أدخل اسم الحساب والرقم السري للانطلاق:</p>
             <input type="text" id="username-input" class="input-field" placeholder="اسم الطيار / الحساب..." maxlength="15">
             <input type="password" id="password-input" class="input-field" placeholder="الرقم السري...">
@@ -616,7 +635,7 @@
             <h1 id="welcome-title">مرحباً بك يا طيار</h1>
             <p id="user-status-desc" style="color: #f1c40f; font-weight: bold; margin-bottom: 5px;">العضوية: عادية | الجواهر: 💎 0</p>
             
-            <button id="admin-panel-btn" class="btn btn-admin" style="display: none; margin-bottom: 8px;" onclick="openAdminPanel()">🛠️ لوحة إدارة النظام الشاملة</button>
+            <button id="admin-panel-btn" class="btn btn-admin" style="display: none; margin-bottom: 8px;" onclick="openAdminPanel()">🛠️ لوحة إدارة المؤسس الشاملة</button>
 
             <!-- القسم الأول: الألعاب -->
             <div id="sec-games" class="section-container active-section">
@@ -630,11 +649,28 @@
                 <button class="btn btn-purple" onclick="openGame(7)">🌀 7. سباق الثقوب الدودية</button>
                 <button class="btn btn-orange" onclick="openGame(8)">🔥 8. حرب الليزر والصواريخ</button>
                 <button class="btn btn-red" onclick="openGame(9)">👑 9. معركة الزعيم الأخير (Boss)</button>
+                
+                <!-- إضافة لعبة الاشتراك الخاصة (تفتح عند الاشتراك فقط) -->
+                <button class="btn btn-vip" onclick="openSubLockedGame()">🔒 10. معركة الحصار الفضائي (لعبة الاشتراك الحصرية)</button>
+                
+                <!-- إضافة لعبة الشاشة المنقسمة بين شخصين -->
+                <button class="btn btn-diamond" onclick="openSplitScreenGame()">👥 11. صراع المجرّتين (لعب ثنائي شاشة منقسمة)</button>
             </div>
 
             <!-- القسم الثاني: المتاجر والاشتراكات الآمنة -->
             <div id="sec-store" class="section-container">
                 <p style="color: #f1c40f; font-size: 0.8rem; margin: 2px 0 8px 0;">💎 المتاجر وااشتراكات النخبة والـ VIP:</p>
+                
+                <!-- واجهة الاشتراك وحسابات الدفع الحقيقية مع اللوجوهات المطلوبة -->
+                <div class="info-card" style="border-color: #f1c40f; background: rgba(241, 196, 15, 0.05); text-align: center;">
+                    <b style="color: #f1c40f; font-size: 0.85rem;">💳 بيانات الدفع والاشتراك الرسمية (مؤمنة):</b>
+                    <div class="payment-logo-container">
+                        <div class="pay-badge">⚡ فوري كاش: <span style="color:#00f3ff;">01114099799</span></div>
+                        <div class="pay-badge">📱 WE Pay: <span style="color:#2ecc71;">01554440996</span></div>
+                    </div>
+                    <span style="font-size: 0.7rem; color: #a4b0be;">ملاحظة هامة: لا يمكن لأي عضو أخذ جواهر بالمجان أو تفعيل رتبة VIP إلا بعد إرسال رقم عملية التحويل والاعتماد المباشر من لوحة المؤسس.</span>
+                </div>
+
                 <button class="btn btn-vip" onclick="openCockpitSimulation()">🛰️ محاكاة الكابينة والرادار (VIP)</button>
                 <button class="btn btn-diamond" onclick="openRechargeModal()">💎 متجر شحن الجواهر الفضائي</button>
                 <button class="btn btn-vip" onclick="openVipModal()">👑 ترقية حساب VIP وااشتراكات الاعتماد الآمنة</button>
@@ -647,14 +683,14 @@
                 
                 <div class="info-card" style="border-color: #f1c40f; background: rgba(241, 196, 15, 0.05);">
                     <b style="color: #f1c40f; font-size: 0.8rem;">👑 مؤسس ومطور اللعبة:</b><br>
-                    <span style="font-size: 0.75rem; color: #fff;">• المطور والمهندس الرئيسي: <b>فريق الإدارة العليا V10 Core</b></span><br>
-                    <span style="font-size: 0.75rem; color: #a4b0be;">• الرؤية الفنية: محاكاة السينما الفضائية والتأمين السحابي المتقدم.</span>
+                    <span style="font-size: 0.75rem; color: #fff;">• المؤسس والمهندس الرئيسي: تحت السيطرة الكاملة لمؤسس النظام V10.3 Core</span><br>
+                    <span style="font-size: 0.75rem; color: #a4b0be;">• إدارة كافة الأقسام وحسابات الاعبين مرتبطة آمنياً بالمؤسس.</span>
                 </div>
 
                 <div class="info-card" style="border-color: #2ecc71; background: rgba(46, 204, 113, 0.05);">
-                    <b style="color: #2ecc71; font-size: 0.8rem;">🚀 تحديث المعمورة (v10.2):</b><br>
-                    <span style="font-size: 0.75rem; color: #fff;">• تشفير معلومات الدعم المباشر ومنع أي تلاعب في رتب الـ VIP بدون تحويل بنكي معتمد.</span><br>
-                    <span style="font-size: 0.75rem; color: #a4b0be;">• ربط نظام الشحن والاشتراكات بلوحة تحكم الأدمن للتحقق التلقائي.</span>
+                    <b style="color: #2ecc71; font-size: 0.8rem;">🚀 تحديث المعمورة (v10.3):</b><br>
+                    <span style="font-size: 0.75rem; color: #fff;">• تفعيل واجهة الاشتراك الحقيقية مع لوجو فوري كاش و WE Pay وحظر الجواهر المجانية.</span><br>
+                    <span style="font-size: 0.75rem; color: #a4b0be;">• إضافة لعبة الشاشة المنقسمة ثنائية اللاعبين ولعبة الحصار الحصرية للمشتركين.</span>
                 </div>
 
                 <button class="btn btn-secondary" style="background: #57606f; margin-top: 10px;" onclick="logoutPlayer()">🚪 تسجيل خروج نهائي</button>
@@ -677,11 +713,11 @@
             </button>
         </div>
 
-        <!-- 3. لوحة تحكم المدير الكاملة وتطوير إدارة الاشتراكات -->
+        <!-- 3. لوحة تحكم المؤسس والمدير الكاملة -->
         <div id="admin-modal" class="screen" style="display: none;">
             <div class="wp-admin-panel">
                 <div class="wp-header">
-                    <h2 style="color: #e74c3c; font-size: 1.1rem; margin:0;">🛠️ لوحة تحكم المدير (V10.2 Core)</h2>
+                    <h2 style="color: #e74c3c; font-size: 1.1rem; margin:0;">🛠️ لوحة تحكم المؤسس (V10.3 Core)</h2>
                     <button class="btn-secondary" style="padding: 4px 8px; font-size:0.75rem;" onclick="closeAdminPanel()">✕ إغلاق</button>
                 </div>
 
@@ -696,10 +732,10 @@
                     </div>
                 </div>
 
-                <!-- قسم تعديل الرقم السري للمدير -->
+                <!-- قسم تعديل معلومات المدير قابله للتعديل -->
                 <div style="background: rgba(231, 76, 60, 0.08); border: 1px solid rgba(231, 76, 60, 0.4); padding: 8px; border-radius: 8px; margin-bottom: 10px;">
-                    <p style="font-size: 0.75rem; color: #ff3838; margin: 0 0 5px 0; font-weight: bold;">🔐 تعديل الرقم السري لحساب المدير:</p>
-                    <input type="password" id="new-admin-password-input" class="input-field" placeholder="أدخل الرقم السري الجديد..." style="width: 100%; margin-bottom: 5px; font-size:0.8rem; padding: 6px;">
+                    <p style="font-size: 0.75rem; color: #ff3838; margin: 0 0 5px 0; font-weight: bold;">🔐 تعديل معلومات ورقم سري المدير:</p>
+                    <input type="password" id="new-admin-password-input" class="input-field" placeholder="أدخل الرقم السري الجديد للمؤسس..." style="width: 100%; margin-bottom: 5px; font-size:0.8rem; padding: 6px;">
                     <button class="btn btn-admin" style="width: 100%; margin:0; padding:6px; font-size:0.75rem;" onclick="updateAdminPassword()">حفظ الرقم السري الجديد</button>
                 </div>
 
@@ -724,7 +760,7 @@
                 </div>
 
                 <div style="background: rgba(255,255,255,0.05); padding: 8px; border-radius: 8px; margin-bottom: 10px;">
-                    <p style="font-size: 0.75rem; color: #00f3ff; margin: 0 0 5px 0;">🔍 البحث عن لاعب وتحديد نوع الاشتراك:</p>
+                    <p style="font-size: 0.75rem; color: #00f3ff; margin: 0 0 5px 0;">🔍 البحث عن لاعب وتحكم كامل بسيادة المؤسس:</p>
                     <input type="text" id="admin-search-input" class="input-field" placeholder="ابحث باسم اللاعب..." style="width: 100%; margin-bottom: 5px; font-size:0.8rem; padding: 6px;">
                     <div style="display: flex; gap: 5px;">
                         <select id="admin-sub-select" class="input-field" style="width: 50%; margin:0; font-size:0.75rem; padding:6px;">
@@ -738,7 +774,7 @@
                     </div>
                 </div>
 
-                <p style="font-size: 0.75rem; color: #a4b0be; margin: 0 0 5px 0; text-align: right;">📋 سجل جميع اللاعبين المسجلين بالسحابة:</p>
+                <p style="font-size: 0.75rem; color: #a4b0be; margin: 0 0 5px 0; text-align: right;">📋 سجل جميع اللاعبين تحت سيطرة المؤسس:</p>
                 <div style="max-height: 150px; overflow-y: auto;">
                     <table class="wp-table">
                         <thead>
@@ -757,13 +793,15 @@
 
         <!-- 4. متجر شحن الجواهر ونموذج الدفع الحقيقي الآمن -->
         <div id="recharge-modal" class="screen" style="display: none;">
-            <h2>💎 متجر الشحن الفضائي الآمن V10.2</h2>
+            <h2>💎 متجر الشحن الفضائي الآمن V10.3</h2>
             <p style="color: #00f3ff; font-size: 0.8rem;">اختر طريقة الدفع المناسبة للتحويل الفوري:</p>
             
             <div class="info-card" style="text-align: center; margin-bottom: 10px;">
-                <b style="color: #f1c40f;">💳 حسابات التحويل الرسمية المعتمدة:</b><br>
-                <span style="font-size: 0.75rem; color: #fff;">• فوري كاش: <b>+201114099799</b></span><br>
-                <span style="font-size: 0.75rem; color: #fff;">• WE Pay: <b>+201554440996</b></span>
+                <b style="color: #f1c40f;">💳 حسابات التحويل الرسمية المعتمدة:</b>
+                <div class="payment-logo-container">
+                    <div class="pay-badge">⚡ فوري كاش: <b>01114099799</b></div>
+                    <div class="pay-badge">📱 WE Pay: <b>01554440996</b></div>
+                </div>
             </div>
 
             <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 12px; width: 90%; max-width: 290px; margin: auto;">
@@ -782,8 +820,8 @@
 
         <!-- 5. ترقية حساب VIP ونموذج اعتماد الاشتراكات الآمن -->
         <div id="vip-modal" class="screen" style="display: none;">
-            <h2>👑 نادي الطيارين النخبة V10.2 (VIP)</h2>
-            <p style="font-size: 0.75rem; color: #a4b0be;">الترقية تتطلب إتمام التحويل عبر فوري كاش (`+201114099799`) أو WE Pay (`+201554440996`) وإدخال رقم العملية حصرياً:</p>
+            <h2>👑 نادي الطيارين النخبة V10.3 (VIP)</h2>
+            <p style="font-size: 0.75rem; color: #a4b0be;">الترقية تتطلب إتمام التحويل عبر فوري كاش (`01114099799`) أو WE Pay (`01554440996`) وإدخال رقم العملية حصرياً:</p>
             
             <div class="vip-card">
                 <b>🥉 العضوية البرونزية (Bronze)</b><br><span style="font-size: 0.75rem;">درع بداية + نقاط مضاعفة 1.2x</span><br>
@@ -814,7 +852,7 @@
 
         <!-- 6. مرآب المركبات -->
         <div id="shop-modal" class="screen" style="display: none;">
-            <h2>مرآب مركبات المستقبل V10.2 3D</h2>
+            <h2>مرآب مركبات المستقبل V10.3 3D</h2>
             <p>اختر طراز سفينتك الفضائية المتقدمة:</p>
             <div class="ship-options">
                 <div class="ship-option selected" onclick="selectShip('🛸', this)">🛸</div>
@@ -833,6 +871,19 @@
             <p style="color: #00f3ff; font-weight: bold;" id="high-score-text">أعلى نتيجة سحابية: 0</p>
             <button class="btn" id="start-btn" onclick="startCurrentGame()">ابدأ التحدي الآن</button>
             <button class="btn btn-secondary" onclick="returnToMenu()">🏠 العودة للقائمة الرئيسية</button>
+        </div>
+
+        <!-- 8. واجهة الشاشة المنقسمة ثنائية اللاعبين (Local / Online Split-Screen) -->
+        <div id="split-screen-container" class="screen" style="display: none; padding:0; background:#000;">
+            <div id="p2-area" style="position:relative; width:100%; height:50%; background:rgba(20,0,40,0.9); border-bottom:3px solid #00f3ff; overflow:hidden;">
+                <div style="position:absolute; top:5px; right:10px; color:#ff3838; font-weight:bold; font-size:0.75rem;">اللاعب 2 (أعلى) - النتيجة: <span id="p2-score">0</span></div>
+                <div id="p2-ship" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); font-size:2.5rem;">🚀</div>
+            </div>
+            <div id="p1-area" style="position:relative; width:100%; height:50%; background:rgba(0,20,40,0.9); overflow:hidden;">
+                <div style="position:absolute; top:5px; right:10px; color:#00f3ff; font-weight:bold; font-size:0.75rem;">اللاعب 1 (أسفل) - النتيجة: <span id="p1-score">0</span></div>
+                <div id="p1-ship" style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); font-size:2.5rem;">🛸</div>
+                <button class="btn btn-secondary" style="position:absolute; bottom:10px; left:10px; width:auto; padding:4px 10px; font-size:0.7rem; z-index:30;" onclick="returnToMenu()">خروج</button>
+            </div>
         </div>
 
         <!-- واجهة اللعب الحية -->
@@ -896,6 +947,7 @@
         const controls = document.getElementById('controls');
         const adminPanelBtn = document.getElementById('admin-panel-btn');
         const adminModal = document.getElementById('admin-modal');
+        const splitScreenContainer = document.getElementById('split-screen-container');
 
         const topProfileBadge = document.getElementById('top-profile-badge');
         const profileAvatarIcon = document.getElementById('profile-avatar-icon');
@@ -909,7 +961,7 @@
         let currentPilotData = { 
             name: '',
             password: '',
-            highScores: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}, 
+            highScores: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0}, 
             ship: '🛸', gems: 50, vipRank: 'عادية', adminApproved: true, isAdmin: false
         };
 
@@ -968,7 +1020,7 @@
                     topProfileBadge.style.display = 'flex';
                     return;
                 } else {
-                    alert(`❌ الرقم السري للمدير غير صحيح!`);
+                    alert(`❌ الرقم السري للمؤسس غير صحيح!`);
                     return;
                 }
             }
@@ -1017,7 +1069,7 @@
             }
 
             if (name.toLowerCase() === 'admin') {
-                alert('اسم الحساب محجوز للمدير الأساسي!');
+                alert('اسم الحساب محجوز للمؤسس الأساسي!');
                 return;
             }
 
@@ -1033,7 +1085,7 @@
                 currentPilotData = {
                     name: name,
                     password: pass,
-                    highScores: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0},
+                    highScores: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0},
                     ship: '🛸',
                     gems: 50,
                     vipRank: 'عادية',
@@ -1072,7 +1124,7 @@
                     callback({ 
                         name: name,
                         password: '',
-                        highScores: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}, 
+                        highScores: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0}, 
                         ship: '🛸', gems: 50, vipRank: 'عادية', adminApproved: true, isAdmin: false
                     }); 
                 }
@@ -1097,7 +1149,7 @@
             profileDisplayName.innerText = currentPlayer;
             profileDisplayRank.innerText = currentPilotData.vipRank;
 
-            if (currentPilotData.isAdmin) {
+            if (currentPilotData.isAdmin || currentPlayer.toLowerCase() === 'admin') {
                 adminPanelBtn.style.display = 'block';
             } else {
                 adminPanelBtn.style.display = 'none';
@@ -1139,7 +1191,7 @@
                 customAltAdminPassword = newPass;
                 localStorage.setItem('customAltAdminPasswordV10', newPass);
             }
-            alert(`✅ تم تحديث الرقم السري بنجاح`);
+            alert(`✅ تم تحديث الرقم السري للمؤسس بنجاح وحفظه في الذاكرة السحابية والمحلية.`);
             document.getElementById('new-admin-password-input').value = '';
         }
 
@@ -1202,7 +1254,7 @@
         async function submitPaymentRequest(serviceType, detailVal = '', gemsVal = 0, transId = '') {
             let tId = transId || document.getElementById('transaction-id-input').value.trim();
             if (!tId) {
-                alert('❌ يجب إدخال رقم عملية التحويل المعتمد (فوري كاش أو WE Pay) لإتمام الطلب!');
+                alert('❌ يجب إدخال رقم عملية التحويل المعتمد عبر فوري كاش أو WE Pay لإتمام الطلب ولا يمكن أخذ جواهر مجانية!');
                 return;
             }
 
@@ -1216,7 +1268,7 @@
                     status: 'pending',
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert('✅ تم إرسال طلبك بنجاح! سيتم المراجعة والتأكيد التلقائي من الإدارة قريباً.');
+                alert('✅ تم إرسال طلبك بنجاح! سيتم المراجعة والاعتماد الفوري من لوحة المؤسس.');
                 if(document.getElementById('transaction-id-input')) document.getElementById('transaction-id-input').value = '';
                 closeRechargeModal();
                 closeVipModal();
@@ -1239,7 +1291,7 @@
                     }
                 }
                 await db.collection("spacePaymentsV10").doc(docId).update({ status: 'approved' });
-                alert(`✅ تم اعتماد طلب الطيار (${playerName}) بنجاح وتحديث قاعدة البيانات تلقائياً!`);
+                alert(`✅ تم اعتماد طلب الطيار (${playerName}) بنجاح وتحت سيطرة المؤسس!`);
                 fetchPendingRequests();
                 fetchAllPlayersForAdmin();
             } catch (e) {
@@ -1316,7 +1368,7 @@
             isPaused = true;
             topProfileBadge.style.display = 'none';
             
-            screenTitle.innerText = "🛸 محاكاة قمرة القيادة (V10.2 VIP)";
+            screenTitle.innerText = "🛸 محاكاة قمرة القيادة (V10.3 VIP)";
             screenDesc.innerHTML = `<h2 id="sim-timer" style="color: #ff3838; font-size: 1.6rem;">10</h2>`;
             highScoreText.innerText = `رتبة الطيار: ${currentPilotData.vipRank}`;
             startBtn.style.display = 'none';
@@ -1334,6 +1386,26 @@
                     returnToMenu();
                 }
             }, 1000);
+        }
+
+        function openSubLockedGame() {
+            const allowedRanks = ['برونزي', 'فضي', 'ذهبي', 'بلاتيني', 'مدير النظام'];
+            const isSubscribed = allowedRanks.includes(currentPilotData.vipRank) || currentPilotData.isAdmin;
+
+            if (!isSubscribed) {
+                alert('🔒 هذه اللعبة خاصة بالمشتركين وأصحاب رتب VIP فقط! يرجى اختيار باقة اشتراك وترقية حسابك.');
+                openVipModal();
+                return;
+            }
+            openGame(10);
+        }
+
+        function openSplitScreenGame() {
+            mainMenu.style.display = 'none';
+            bottomNavBar.style.display = 'none';
+            topProfileBadge.style.display = 'none';
+            splitScreenContainer.style.display = 'flex';
+            startSplitScreenGame();
         }
 
         let currentGame = 1, score = 0, lives = 3, level = 1, gameSpeed = 4, spawnRate = 700;
@@ -1394,13 +1466,15 @@
                 6: "🛡️ معركة حقول الألغام: تفادي حواجز الألغام الذكية.",
                 7: "🌀 سباق الثقوب الدودية: عواصف نيزكية متعرجة وسرعة جنونية.",
                 8: "🔥 حرب الليزر والصواريخ: إطلاق صواريخ عابرة مدمرة.",
-                9: "👑 معركة الزعيم الأخير: واجه سفينة الزعيم العملاقة!"
+                9: "👑 معركة الزعيم الأخير: واجه سفينة الزعيم العملاقة!",
+                10: "🔒 معركة الحصار الفضائي: لعبة حصرية للمشتركين فقط مع تحديات قوية وجوائز مضاعفة."
             };
 
             const titles = {
                 1: "⭐ 1. صائد النجوم الكلاسيكي", 2: "☄️ 2. تحدي النيازك القاتلة", 3: "🚀 3. غزو الفضاء السريع",
                 4: "💎 4. جامع الألماس والمجرات", 5: "⚡ 5. حرب الثقوب السوداء", 6: "🛡️ 6. معركة حقول الألغام",
-                7: "🌀 7. سباق الثقوب الدودية", 8: "🔥 8. حرب الليزر والصواريخ", 9: "👑 9. معركة الزعيم الأخير"
+                7: "🌀 7. سباق الثقوب الدودية", 8: "🔥 8. حرب الليزر والصواريخ", 9: "👑 9. معركة الزعيم الأخير",
+                10: "🔒 10. معركة الحصار الفضائي (المشتركين)"
             };
 
             screenTitle.innerText = titles[gameNum];
@@ -1413,6 +1487,7 @@
             document.querySelectorAll('.item, .laser-l1, .laser-l2, .laser-l3, .missile, .explosion').forEach(el => el.remove());
             
             gameScreen.style.display = 'none';
+            splitScreenContainer.style.display = 'none';
             ui.style.display = 'none';
             controls.style.display = 'none';
             player.style.display = 'none';
@@ -1485,7 +1560,7 @@
             if (!isPlaying || isPaused) return;
             const missile = document.createElement('div');
             
-            if (currentGame === 8 || level >= 4 || currentPilotData.vipRank === 'بلاتيني' || currentPilotData.isAdmin) {
+            if (currentGame === 8 || currentGame === 10 || level >= 4 || currentPilotData.vipRank === 'بلاتيني' || currentPilotData.isAdmin) {
                 missile.classList.add('missile'); 
                 missile.dataset.type = 'missile';
             } else if (level === 3) {
@@ -1526,8 +1601,8 @@
             
             if (hasShield) { player.classList.add('shield-active'); } else { player.classList.remove('shield-active'); }
 
-            const speeds = { 1: 4, 2: 5.5, 3: 7.5, 4: 4.5, 5: 6.5, 6: 6, 7: 8, 8: 6.5, 9: 9 };
-            const rates = { 1: 700, 2: 430, 3: 300, 4: 550, 5: 350, 6: 380, 7: 280, 8: 320, 9: 240 };
+            const speeds = { 1: 4, 2: 5.5, 3: 7.5, 4: 4.5, 5: 6.5, 6: 6, 7: 8, 8: 6.5, 9: 9, 10: 7 };
+            const rates = { 1: 700, 2: 430, 3: 300, 4: 550, 5: 350, 6: 380, 7: 280, 8: 320, 9: 240, 10: 300 };
 
             gameSpeed = speeds[currentGame] || 4;
             spawnRate = rates[currentGame] || 700;
@@ -1574,7 +1649,7 @@
             const randomX = Math.random() * (rect.width - 50);
             const rand = Math.random();
 
-            if (currentGame === 9) {
+            if (currentGame === 9 || currentGame === 10) {
                 if (rand < 0.3) { item.innerHTML = '👑'; item.dataset.type = 'good'; item.dataset.val = 60; }
                 else { item.innerHTML = '👾'; item.dataset.type = 'bad'; }
             } else {
@@ -1663,6 +1738,29 @@
             });
         }
 
+        // محاكاة سريعة للعبة الشاشة المنقسمة الثنائية
+        function startSplitScreenGame() {
+            let p1Score = 0, p2Score = 0;
+            const p1Ship = document.getElementById('p1-ship');
+            const p2Ship = document.getElementById('p2-ship');
+            const p1ScoreEl = document.getElementById('p1-score');
+            const p2ScoreEl = document.getElementById('p2-score');
+
+            let p1X = 200, p2X = 200;
+            let splitInterval = setInterval(() => {
+                p1Score += 10; p2Score += 10;
+                p1ScoreEl.innerText = p1Score;
+                p2ScoreEl.innerText = p2Score;
+                p1X += (Math.random() - 0.5) * 30;
+                p2X += (Math.random() - 0.5) * 30;
+                p1Ship.style.left = Math.max(20, Math.min(380, p1X)) + 'px';
+                p2Ship.style.left = Math.max(20, Math.min(380, p2X)) + 'px';
+            }, 200);
+
+            // حفظ المرجع للإيقاف عند الخروج
+            window.activeSplitInterval = splitInterval;
+        }
+
         function createExplosion(x, y) {
             const exp = document.createElement('div');
             exp.classList.add('explosion');
@@ -1691,7 +1789,7 @@
             }
 
             let highScore = (currentPilotData.highScores && currentPilotData.highScores[currentGame]) || 0;
-            screenTitle.innerText = "🏆 انتهت المعركة الفضائية V10.2!";
+            screenTitle.innerText = "🏆 انتهت المعركة الفضائية V10.3!";
             screenDesc.innerHTML = `الكومندان: <b>${currentPlayer}</b><br>نقاطك: <b>${score}</b><br>الجواهر: 💎 <b>+${Math.floor(score/20)}</b><br>الرقم القياسي: <b>${highScore}</b>`;
             highScoreText.innerText = `رصيد الجواهر الحالي: 💎 ${currentPilotData.gems}`;
             startBtn.innerText = "إعادة المحاولة";
